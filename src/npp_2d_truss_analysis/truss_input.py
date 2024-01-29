@@ -10,6 +10,24 @@ from tkinter import filedialog
 
 logging.basicConfig(level=logging.DEBUG)
 
+def integer_to_latin_sequence(n):
+    """Converts an integer to a Latin sequence.
+
+    This should be used to name nodes as letters to avoid confusion
+
+    Args:
+        n (int): The integer to be converted.
+
+    Returns:
+        str: The Latin sequence representation of the integer.
+    """
+    result = ""
+    while n > 0:
+        n -= 1  # Adjusting for 0-indexing
+        result = chr(n % 26 + ord('A')) + result
+        n //= 26
+    return result
+
 def read_file(file_name, file_path):
     file_data = []
 
@@ -97,6 +115,7 @@ class Mesh:
         self.number_nodes = None
         self.number_elements = None
         self.node_coordinates = None
+        self.node_names = None
         self.element_connectivity = None
         self.young_modulus = None
         self.area = None
@@ -108,8 +127,11 @@ class Mesh:
         self.number_nodes = int(file_data[file_line][0])
         file_line += 1
         self.node_coordinates = []
-        for _ in range(self.number_nodes):
+        self.node_names = [] 
+        for k in range(self.number_nodes):
             self.node_coordinates.append((file_data[file_line][0], file_data[file_line][1]))
+            self.node_names.append(integer_to_latin_sequence(k + 1)) #
+            # self.node_names.append(str(k + 1)) # This would have the effect of the the original code
             file_line += 1
 
         # Process element data
@@ -155,6 +177,12 @@ class Mesh:
         self.number_elements = len(data["elements"])
         self.element_connectivity = [(element["connectivity"][0], element["connectivity"][1]) for element in data["elements"]]
         element_material = [element["materialId"] for element in data["elements"]]
+
+        # Assigning node names
+        self.node_names = [integer_to_latin_sequence(k + 1) for k in range(self.number_nodes)]
+        # TODO: I could try adding a node name to the JSON file and 
+        # use the integer_to_latin_sequence function as a fallback is the name is not provided
+
 
         # Process material data
         material_dict = {material["id"]: (material["youngModulus"], material["area"]) for material in data["materials"]}

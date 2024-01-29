@@ -156,7 +156,9 @@ class TrussPlotter:
         self.scale_factor = scale_factor
 
 
-    def plot_truss(self, info, mesh, forces, displacements, save:bool=True, show:bool=True):
+    def plot_truss(self, info, mesh:Mesh, forces:Forces, 
+                   displacements:Displacements, 
+                   save:bool=True, show:bool=True):
         project_dir = info.project_directory
         file_name = info.file_name
         number_nodes = mesh.number_nodes
@@ -164,11 +166,6 @@ class TrussPlotter:
         node_coordinates = np.array(mesh.node_coordinates)
         element_connectivity = mesh.element_connectivity
         force_nodes = forces.force_nodes
-        pin_nodes = displacements.pin_nodes
-        number_roller = displacements.number_roller
-        roller_nodes = displacements.roller_nodes
-        roller_directions = displacements.roller_directions
-        roller_angles = displacements.roller_angles
 
         new_file_name = f"{file_name}_TRUSS.pdf"
         file_path = f"{project_dir}/{new_file_name}"
@@ -214,7 +211,7 @@ class TrussPlotter:
         # Plot node numbers
         for i in range(number_nodes):
             x, y = node_coordinates[i]
-            ax.text(x + d_x_real, y + d_y_real, str(i+1), fontsize=6, 
+            ax.text(x + d_x_real, y + d_y_real, mesh.node_names[i], fontsize=6,
                     ha='center', va='center', backgroundcolor='white')
 
         # Plot element numbers

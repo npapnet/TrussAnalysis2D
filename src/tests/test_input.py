@@ -1,5 +1,6 @@
 import pytest
 from npp_2d_truss_analysis.truss_input import Mesh, Displacements, Forces
+from npp_2d_truss_analysis.truss_input import integer_to_latin_sequence
 
 @pytest.fixture
 def mesh_data():
@@ -63,3 +64,15 @@ def test_forces(forces_data):
     assert forces.force_nodes == [5, 3]
     assert forces.force_components ==  [(40000.0, 0.0), (20000.0, 0.0)]
     assert forces.force_angles == [-180.0, 200.0]
+
+
+def test_integer_to_latin_sequence():
+    assert integer_to_latin_sequence(1) == 'A'
+    assert integer_to_latin_sequence(2) == 'B'
+    assert integer_to_latin_sequence(26) == 'Z'
+    assert integer_to_latin_sequence(27) == 'AA'
+    assert integer_to_latin_sequence(28) == 'AB'
+    assert integer_to_latin_sequence(52) == 'AZ'
+    assert integer_to_latin_sequence(53) == 'BA'
+    assert integer_to_latin_sequence(54) == 'BB'
+    assert integer_to_latin_sequence(702) == 'ZZ'

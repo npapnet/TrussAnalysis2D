@@ -40,7 +40,7 @@ truss_problem._forces.list_forces()
 #%%
 truss_problem.write_input_data()
 truss_problem.solve()
-# truss_problem.plot_truss(save=True, show=True)
+truss_problem.plot_truss(save=False, show=True)
 print("-------------solution ----------------")
 truss_problem.report_reactions(fmt='>12.1f')
 truss_problem.report_rod_forces(fmt='>12.1f')
