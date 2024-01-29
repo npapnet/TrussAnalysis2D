@@ -5,6 +5,7 @@ Tutorials
    :maxdepth: 2
    :caption: Tutorials:
 
+   quickstart
    tutorial_original_input
    tutorial_json_input
    tutorial_single_file_json

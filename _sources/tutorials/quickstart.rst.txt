@@ -1,9 +1,19 @@
-Tutorial for single file json   input
-=====================================
+quickstart
+==========
 
-This tutorial demonstrates the way of using json file to input the problem definition for Truss Analysis project.
+This tutorial demonstrates a quick way to get started.
 
-We will use a JSON configuration to define the truss structure and then perform an analysis to determine the reactions and rod forces.
+We will use a JSON configuration to define the truss structure and then perform an analysis to determine the reactions and rod forces and plot the results.
+
+Installation
+------------
+
+Use 
+
+.. code-block:: bash
+
+    pip install npp_2d_truss_analysis
+
 
 Import Necessary Libraries/Setup
 --------------------------------
